@@ -2,6 +2,7 @@ import os
 import cv2
 import numpy as np
 import importlib.util
+from time import sleep
 
 pkg = importlib.util.find_spec('tensorflow')
 if pkg is None:
@@ -48,6 +49,7 @@ class ImageDetection:
         boxes = self.interpreter.get_tensor(self.output_details[0]['index'])[0]
         classes = self.interpreter.get_tensor(self.output_details[1]['index'])[0]
         scores = self.interpreter.get_tensor(self.output_details[2]['index'])[0]
+        detect_text = ""
         for i in range(len(scores)):
             if self.min_conf_threshold < scores[i] <= 1.0:
                 ymin = int(max(1, (boxes[i][0] * im_h)))
@@ -63,8 +65,9 @@ class ImageDetection:
                 cv2.rectangle(image, (xmin, label_ymin - label_size[1] - 10),
                               (xmin + label_size[0], label_ymin + base_line - 10), (255, 255, 255), cv2.FILLED)
                 cv2.putText(image, label, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
-        cv2.imshow('Object detection', image)
-
-        if cv2.waitKey(0):
-            cv2.destroyAllWindows()
-            return
+                detect_text = detect_text + " " + object_name
+        cv2.imshow('Detector', image)
+        os.system('echo %s | festival --tts & ' % detect_text)
+        sleep(5)
+        cv2.destroyAllWindows()
+        return
