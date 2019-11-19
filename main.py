@@ -11,15 +11,14 @@ camera = PiCamera()
 
 
 def press():
-    print("Button pressed!")
     camera.start_preview()
-    sleep(2)
+    sleep(1)
     camera.capture('/tmp/picture.jpg')
     camera.stop_preview()
 
 
 def release():
-    print("Button released!")
+    print("released")
 
 
 button.when_pressed = press
