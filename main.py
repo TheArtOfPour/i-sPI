@@ -13,6 +13,7 @@ image_path = '/tmp/picture.jpg'
 button = Button(button_pin)
 camera = PiCamera()
 detector = ImageDetection(model_dir)
+print("ready")
 
 
 def press():
