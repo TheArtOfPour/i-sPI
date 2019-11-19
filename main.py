@@ -4,10 +4,14 @@ from gpiozero import Button
 from signal import pause
 from picamera import PiCamera
 from time import sleep
+from image_detection import ImageDetection
 
-buttonPin = 16
-button = Button(buttonPin)
+button_pin = 16
+model_dir = 'Sample_TFLite_model'
+
+button = Button(button_pin)
 camera = PiCamera()
+detector = ImageDetection(model_dir)
 
 
 def press():
