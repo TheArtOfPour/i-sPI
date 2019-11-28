@@ -20,10 +20,10 @@ with tf.Session() as sess:
     softmax_tensor = sess.graph.get_tensor_by_name('final_result:0')
     predictions = sess.run(softmax_tensor, {'DecodeJpeg/contents:0': image_data})
 
-# Sort to show labels of first prediction in order of confidence
-top_k = predictions[0].argsort()[-len(predictions[0]):][::-1]
+    # Sort to show labels of first prediction in order of confidence
+    top_k = predictions[0].argsort()[-len(predictions[0]):][::-1]
 
-for node_id in top_k:
-    human_string = label_lines[node_id]
-score = predictions[0][node_id]
-print('%s (score = %.5f)' % (human_string, score))
+    for node_id in top_k:
+        human_string = label_lines[node_id]
+    score = predictions[0][node_id]
+    print('%s (score = %.5f)' % (human_string, score))
